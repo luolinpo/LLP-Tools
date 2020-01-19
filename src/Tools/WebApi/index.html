@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="commonhelper.js"></script>
+    <title>小助手</title>
+</head>
+<body>
+ 萨顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶
+</body>
+</html>
+<script type="text/javascript">
+
+    function Person(name, age, job) {
+        this.name = name;
+        console.log(this);
+        this.age = age;
+        this.job = job;
+        this.sayName = function () {
+            alert(this.name);
+        };
+    }
+    window.onload = function () {
+
+        var person1 =  Person("Nicholas", 29, "Software Engineer");
+    }
+</script>
+<script>
+
+    var CommonHelper = {
+        //is exists  Prototype 
+        //return true  in  Prototype ,false not in Prototype
+        hasPrototypeProperty: function (object, name) {
+            //hasOwnProperty  when name in the prototype return true 
+            //in   if name exist return true
+            return !object.hasOwnProperty(name) && (name in object);
+        }
+    }
+</script>

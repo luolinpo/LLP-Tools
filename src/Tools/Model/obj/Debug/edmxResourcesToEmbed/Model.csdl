@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="zyt_basegpsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AlarmSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VehicleID" Type="Int32" Nullable="false" />
+    <Property Name="parameter1" Type="Int32" />
+    <Property Name="parameter2" Type="Double" />
+    <Property Name="parameter3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="parameter4" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="parameter5" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="Int32" Nullable="false" />
+    <Property Name="EditTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EditUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AlarmTypeID" Type="Int32" Nullable="false" />
+    <Property Name="InOutType" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vehicle">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MobileID" Type="Int32" />
+    <Property Name="DriverID" Type="Int32" />
+    <Property Name="VehicleTypeID" Type="Int32" />
+    <Property Name="ColorID" Type="Int32" />
+    <Property Name="Plate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VehicleSIM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VoiceNum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DataNum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GPRSNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VehiclePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateTime" Type="DateTime" Precision="3" />
+    <Property Name="Creater" Type="Int32" />
+    <Property Name="LoginPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoginEnable" Type="Int32" />
+    <Property Name="IsEnable" Type="Int32" />
+    <Property Name="OverdueTime" Type="DateTime" Precision="3" />
+    <Property Name="Months" Type="Int32" />
+    <Property Name="PswState" Type="Int32" />
+    <Property Name="OilBox" Type="Int32" />
+    <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ClientID" Type="Int32" />
+    <Property Name="ServerID" Type="Int32" />
+    <Property Name="Del" Type="Int32" />
+    <Property Name="Icon" Type="Int32" />
+    <Property Name="InstallerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InstallPosition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InstallType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InstallTime" Type="DateTime" Precision="3" />
+    <Property Name="Cpys" Type="Int32" />
+    <Property Name="Sccj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Aliases" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsEnableTime" Type="DateTime" Precision="3" />
+    <Property Name="VIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VehBrandID" Type="Int32" />
+    <Property Name="VehSeriesID" Type="Int32" />
+    <Property Name="IPCode" Type="Int32" />
+    <Property Name="VehicleType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastModify" Type="DateTime" Precision="3" />
+    <Property Name="VehicleStatus" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="zyt_basegpsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AlarmSetting" EntityType="Self.AlarmSetting" />
+    <EntitySet Name="Vehicle" EntityType="Self.Vehicle" />
+  </EntityContainer>
+</Schema>

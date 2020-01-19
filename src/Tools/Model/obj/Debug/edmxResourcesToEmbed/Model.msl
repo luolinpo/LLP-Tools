@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="zyt_basegpsModelStoreContainer" CdmEntityContainer="zyt_basegpsEntities">
+    <EntitySetMapping Name="AlarmSetting">
+      <EntityTypeMapping TypeName="zyt_basegpsModel.AlarmSetting">
+        <MappingFragment StoreEntitySet="AlarmSetting">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+          <ScalarProperty Name="parameter1" ColumnName="parameter1" />
+          <ScalarProperty Name="parameter2" ColumnName="parameter2" />
+          <ScalarProperty Name="parameter3" ColumnName="parameter3" />
+          <ScalarProperty Name="parameter4" ColumnName="parameter4" />
+          <ScalarProperty Name="parameter5" ColumnName="parameter5" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="EditTime" ColumnName="EditTime" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+          <ScalarProperty Name="AlarmTypeID" ColumnName="AlarmTypeID" />
+          <ScalarProperty Name="InOutType" ColumnName="InOutType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vehicle">
+      <EntityTypeMapping TypeName="zyt_basegpsModel.Vehicle">
+        <MappingFragment StoreEntitySet="Vehicle">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MobileID" ColumnName="MobileID" />
+          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+          <ScalarProperty Name="VehicleTypeID" ColumnName="VehicleTypeID" />
+          <ScalarProperty Name="ColorID" ColumnName="ColorID" />
+          <ScalarProperty Name="Plate" ColumnName="Plate" />
+          <ScalarProperty Name="VehicleSIM" ColumnName="VehicleSIM" />
+          <ScalarProperty Name="VoiceNum" ColumnName="VoiceNum" />
+          <ScalarProperty Name="DataNum" ColumnName="DataNum" />
+          <ScalarProperty Name="GPRSNum" ColumnName="GPRSNum" />
+          <ScalarProperty Name="VehiclePassword" ColumnName="VehiclePassword" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="Creater" ColumnName="Creater" />
+          <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
+          <ScalarProperty Name="LoginEnable" ColumnName="LoginEnable" />
+          <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+          <ScalarProperty Name="OverdueTime" ColumnName="OverdueTime" />
+          <ScalarProperty Name="Months" ColumnName="Months" />
+          <ScalarProperty Name="PswState" ColumnName="PswState" />
+          <ScalarProperty Name="OilBox" ColumnName="OilBox" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="ServerID" ColumnName="ServerID" />
+          <ScalarProperty Name="Del" ColumnName="Del" />
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
+          <ScalarProperty Name="InstallerName" ColumnName="InstallerName" />
+          <ScalarProperty Name="InstallPosition" ColumnName="InstallPosition" />
+          <ScalarProperty Name="InstallType" ColumnName="InstallType" />
+          <ScalarProperty Name="InstallTime" ColumnName="InstallTime" />
+          <ScalarProperty Name="Cpys" ColumnName="Cpys" />
+          <ScalarProperty Name="Sccj" ColumnName="Sccj" />
+          <ScalarProperty Name="Aliases" ColumnName="Aliases" />
+          <ScalarProperty Name="IsEnableTime" ColumnName="IsEnableTime" />
+          <ScalarProperty Name="VIN" ColumnName="VIN" />
+          <ScalarProperty Name="VehBrandID" ColumnName="VehBrandID" />
+          <ScalarProperty Name="VehSeriesID" ColumnName="VehSeriesID" />
+          <ScalarProperty Name="IPCode" ColumnName="IPCode" />
+          <ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
+          <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+          <ScalarProperty Name="VehicleStatus" ColumnName="VehicleStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

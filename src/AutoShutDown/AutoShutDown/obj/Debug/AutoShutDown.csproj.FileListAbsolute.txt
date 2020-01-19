@@ -1,0 +1,8 @@
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\bin\Debug\AutoShutDown.exe.config
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\bin\Debug\AutoShutDown.exe
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\bin\Debug\AutoShutDown.pdb
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\obj\Debug\AutoShutDown.Form1.resources
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\obj\Debug\AutoShutDown.Properties.Resources.resources
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\obj\Debug\AutoShutDown.csproj.GenerateResource.Cache
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\obj\Debug\AutoShutDown.exe
+E:\RDC\Projects\ZYT.IGPS\AutoShutDown\AutoShutDown\obj\Debug\AutoShutDown.pdb

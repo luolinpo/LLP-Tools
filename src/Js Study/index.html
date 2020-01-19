@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="commonhelper.js"></script>
+    <title>小助手</title>
+</head>
+<body>
+    萨顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶
+    <button id="my-btn">测试</button>
+
+    <button onclick="jieliu()">测试111</button>
+
+    <button onclick="jieliu2()">测试222</button>
+</body>
+</html>
+
+<script>
+    //IE9+、Firefox 4+和Chrome 以外的浏览器可能需要支持bind函数
+    function bind(fn, context) {
+        return function () {
+            return fn.apply(context, arguments);
+        };
+    }
+
+    var LCH = {
+        // remove value at array
+        removeArrayItem: function (array, value) {
+            var index = $.inArray(value, array);
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+        },
+        //value is exist in array
+        isExistInArray: function (array, value) {
+            var index = $.inArray(value, array);
+            return index > -1 ? true : false;
+        },
+        // keyvaluedictionary
+        keyValueDictionary: function () {
+            var data = {};
+            this.set = function (key, value) {
+                data[key] = value;
+            };
+            this.unset = function (key) {
+                delete data[key];
+            };
+            this.get = function (key) {
+                return data[key] || null;
+            }
+        },
+        // get parameters from Url
+        getQueryString: function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            else {
+                return undefined;
+            }
+        },
+        //timestamp conversion(timestamp from .Net)
+        getDataString: function (timestamp) {
+            if (CommonHelper.IsNullOrWhiteSpace(timestamp)) {
+                return "";
+            }
+            var timestampDate = timestamp.replace("/Date(", "").replace(")/", "");
+            var tempDate = new Date(parseInt(timestampDate));
+            Y = tempDate.getFullYear() + "-";
+            M = (tempDate.getMonth() + 1 < 10 ? "0" + (tempDate.getMonth() + 1) : tempDate.getMonth() + 1) + "-";
+            D = tempDate.getDate() < 10 ? "0" + tempDate.getDate() : tempDate.getDate();
+            h = tempDate.getHours() < 10 ? "0" + tempDate.getHours() : tempDate.getHours();
+            m = tempDate.getMinutes() < 10 ? "0" + tempDate.getMinutes() : tempDate.getMinutes();
+            s = tempDate.getSeconds() < 10 ? "00" : tempDate.getSeconds();
+            return (Y + M + D + " " + h + ":" + m + ":" + s);
+        },
+        //  indicates whether a specified string is null, empty, or consists only of white-space
+        IsNullOrWhiteSpace: function (stringValue) {
+            var returnValue = false;
+            if (typeof (stringValue) == "string") {
+                stringValue = stringValue.replace(/(^\s*)|(\s*$)/g, "");
+                if (stringValue == "") {
+                    return true;
+                }
+                return false;
+            }
+            else {
+                return true;
+            }
+        },
+        //is exists  Prototype
+        //return true  in  Prototype ,false not in Prototype
+        hasPrototypeProperty: function (object, name) {
+            //hasOwnProperty  when name in the prototype return true
+            //in   if name exist return true
+            return !object.hasOwnProperty(name) && (name in object);
+        },
+        //function currying
+        curry: function (fn) {
+            var args = Array.prototype.slice.call(arguments, 1);
+            return function () {
+                var innerArgs = Array.prototype.slice.call(arguments);
+                var finalArgs = args.concat(innerArgs);
+                return fn.apply(null, finalArgs);
+            };
+        },
+        //function throttling ,frequent calls can use this
+        throttle: function (method, context) {
+            clearTimeout(method.tId);
+            method.tId = setTimeout(function () {
+                method.call(context);
+            }, 100);
+        },
+        //IE9+、Firefox 4+和Chrome, But beyond that,use this
+        bind: function (fn, context) {
+            return function () {
+                return fn.apply(context, arguments);
+            }
+        },
+        ////eg.
+        //// function handleMessage(event) {
+        //// console.log("Message received: " + event.message);
+        ////}
+        //////创建一个新对象
+        ////var target = new LCH.EventTarget();
+        //////添加一个事件处理程序
+        ////target.addHandler("message", handleMessage);
+        //////触发事件
+        ////target.fire({ type: "message", message: "Hello world!" });
+        //////删除事件处理程序
+        ////target.removeHandler("message", handleMessage);
+        //////再次，应没有处理程序
+        ////target.fire({ type: "message", message: "Hello world!" });
+        eventTarget: function () {
+            this.handlers = {};
+        }
+    }
+    LCH.EventUtil = {
+        addHandler: function (element, type, handler) {
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+        removeHandler: function (element, type, handler) {
+            if (element.removeEventListener) {
+                element.removeEventListener(type, handler, false);
+            } else if (element.detachEvent) {
+                element.detachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = null;
+            }
+        }
+    };
+    LCH.CookieUtil = {
+        get: function (name) {
+            var cookieName = encodeURIComponent(name) + "=",
+            cookieStart = document.cookie.indexOf(cookieName),
+            cookieValue = null;
+            if (cookieStart > -1) {
+                var cookieEnd = document.cookie.indexOf(";", cookieStart);
+                if (cookieEnd == -1) {
+                    cookieEnd = document.cookie.length;
+                }
+                cookieValue = decodeURIComponent(document.cookie.substring(cookieStart
+                + cookieName.length, cookieEnd));
+            }
+            return cookieValue;
+        },
+        set: function (name, value, expires, path, domain, secure) {
+            var cookieText = encodeURIComponent(name) + "=" +
+            encodeURIComponent(value);
+            if (expires instanceof Date) {
+                cookieText += "; expires=" + expires.toGMTString();
+            }
+            if (path) {
+                cookieText += "; path=" + path;
+            }
+            if (domain) {
+                cookieText += "; domain=" + domain;
+            }
+            if (secure) {
+                cookieText += "; secure";
+            }
+            document.cookie = cookieText;
+        },
+        unset: function (name, path, domain, secure) {
+            this.set(name, "", new Date(0), path, domain, secure);
+        }
+    };
+    LCH.eventTarget.prototype = {
+        constructor: EventTarget,
+        addHandler: function (type, handler) {
+            if (typeof this.handlers[type] == "undefined") {
+                this.handlers[type] = [];
+            }
+            this.handlers[type].push(handler);
+        },
+        fire: function (event) {
+            if (!event.target) {
+                event.target = this;
+            }
+            if (this.handlers[event.type] instanceof Array) {
+                var handlers = this.handlers[event.type];
+                for (var i = 0, len = handlers.length; i < len; i++) {
+                    handlers[i](event);
+                }
+            }
+        },
+        removeHandler: function (type, handler) {
+            if (this.handlers[type] instanceof Array) {
+                var handlers = this.handlers[type];
+                for (var i = 0, len = handlers.length; i < len; i++) {
+                    if (handlers[i] === handler) {
+                        break;
+                    }
+                }
+                handlers.splice(i, 1);
+            }
+        }
+    };
+</script>
+<script type="text/javascript">
+
+    function jieliu() {
+        for (var i = 0; i < 1000000000; i++) {
+            var x = i * i + 11 / 5 * i;
+            var y = i * (i + 11) / 5 * i * 12 + i / 5;
+        }
+        console.log(new Date().toLocaleTimeString() + "  " + new Date().getMilliseconds());
+    }
+    function jieliu2() {
+        LCH.throttle(jieliu);
+        //for (var i = 0; i < 1000000000; i++) {
+        //    var x = i * i + 11 / 5 * i;
+        //    var y = i * (i + 11) / 5 * i * 12 + i / 5;
+        //}
+        //console.log(new Date().toLocaleTimeString() + "  " + new Date().getMilliseconds());
+    }
+    function createXHR() {
+        if (typeof XMLHttpRequest != "undefined") {
+            createXHR = function () {
+                return new XMLHttpRequest();
+            };
+        }
+        else if (typeof ActiveXObject != "undefined") {
+            createXHR = function () {
+                if (typeof arguments.callee.activeXString != "string") {
+                    var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0",
+                    "MSXML2.XMLHttp"],
+                    i, len;
+                    for (i = 0, len = versions.length; i < len; i++) {
+                        try {
+                            new ActiveXObject(versions[i]);
+                            arguments.callee.activeXString = versions[i];
+                            break;
+                        } catch (ex) {
+                            //skip
+                        }
+                    }
+                }
+                return new ActiveXObject(arguments.callee.activeXString);
+            };
+        }
+        else {
+            createXHR = function () {
+                throw new Error("No XHR object available.");
+            };
+        }
+        return createXHR();
+    }
+    function Person(name, age, job) {
+        this.name = name;
+        console.log(this);
+        this.age = age;
+        this.job = job;
+        this.sayName = function () {
+            alert(this.name);
+        };
+    }
+    window.onload = function () {
+        createXHR();
+        var person1 = Person("Nicholas", 29, "Software Engineer");
+    }
+
+    var handler = {
+        message: "Event handled",
+        handleClick: function (event) {
+            alert(this.message);
+        }
+    };
+    var btn = document.getElementById("my-btn");
+    LCH.EventUtil.addHandler(btn, "click", handler.handleClick.bind(handler));
+</script>

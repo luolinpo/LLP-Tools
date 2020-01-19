@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<classificationrule>
+  <!--记录书本的信息-->
+  <!--<rules formattype="jpd" formatname="1111">
+   </rules>-->
+  <!--<rules>
+     <formattype>zip</formattype>
+     <formatname>压缩文件</formatname>
+   </rules>
+   <rules>
+     <formattype>pdf</formattype>
+     <formatname>书籍</formatname>
+   </rules>-->
+  <rules formattype="zip" formatname="压缩文件" />
+  <rules formattype="txt" formatname="文本" />
+  <rules formattype="jpg" formatname="图片" />
+  <rules formattype="exe" formatname="软件" />
+  <rules formattype="png" formatname="图片" />
+  <rules formattype="7z" formatname="压缩文件" />
+  <rules formattype="pdf" formatname="PDF文档" />
+  <rules formattype="rar" formatname="压缩文件" />
+  <rules formattype="docx" formatname="word文档" />
+  <rules formattype="xls" formatname="execl文档" />
+</classificationrule>

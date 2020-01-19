@@ -1,0 +1,12 @@
+C:\Users\Administrator\Desktop\工具Html\Tools\ConsoleApplicationTest\bin\Debug\ConsoleApplicationTest.exe.config
+C:\Users\Administrator\Desktop\工具Html\Tools\ConsoleApplicationTest\bin\Debug\ConsoleApplicationTest.exe
+C:\Users\Administrator\Desktop\工具Html\Tools\ConsoleApplicationTest\bin\Debug\ConsoleApplicationTest.pdb
+C:\Users\Administrator\Desktop\工具Html\Tools\ConsoleApplicationTest\obj\Debug\ConsoleApplicationTest.exe
+C:\Users\Administrator\Desktop\工具Html\Tools\ConsoleApplicationTest\obj\Debug\ConsoleApplicationTest.pdb
+E:\BaiDu\工具Html0812\工具Html\Tools\ConsoleApplicationTest\bin\Debug\ConsoleApplicationTest.exe.config
+E:\BaiDu\工具Html0812\工具Html\Tools\ConsoleApplicationTest\bin\Debug\ConsoleApplicationTest.exe
+E:\BaiDu\工具Html0812\工具Html\Tools\ConsoleApplicationTest\bin\Debug\ConsoleApplicationTest.pdb
+E:\BaiDu\工具Html0812\工具Html\Tools\ConsoleApplicationTest\obj\Debug\ConsoleApplicationTest.csprojAssemblyReference.cache
+E:\BaiDu\工具Html0812\工具Html\Tools\ConsoleApplicationTest\obj\Debug\ConsoleApplicationTest.csproj.CoreCompileInputs.cache
+E:\BaiDu\工具Html0812\工具Html\Tools\ConsoleApplicationTest\obj\Debug\ConsoleApplicationTest.exe
+E:\BaiDu\工具Html0812\工具Html\Tools\ConsoleApplicationTest\obj\Debug\ConsoleApplicationTest.pdb

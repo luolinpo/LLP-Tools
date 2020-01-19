@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "??????";
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Padq2FiGrjmUOQI30WfcIzfd"></script>
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+    <title>百度定位</title>
+    <style>
+        #search {
+            padding: 20px 10px;
+            position: fixed;
+            margin: 0px;
+            width: 500px;
+            border: 1px solid #bab6b6;
+            right: 5px;
+            background-color: white;
+            z-index: 9999;
+        }
+
+        #showsearch {
+            position: fixed;
+            margin: 0px;
+            width: 15px;
+            height: 75px;
+            background-color: #1b151f;
+            right: 527px;
+            top: 10px;
+            color: white;
+            padding: 5px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .searchtable td input {
+            width: 200px;
+            height: 32px;
+            border: 1px solid #0e87e6;
+            border-radius: 3px;
+        }
+
+        .searchtable {
+            font-size: 14px;
+            border: none;
+        }
+
+            .searchtable tr {
+                border: none !important;
+                margin: 6px;
+                height: 45px;
+            }
+
+                .searchtable tr td {
+                    border: none !important;
+                    margin: 5px;
+                    height: 38px;
+                }
+
+                    .searchtable tr td:first-child {
+                        text-align: right;
+                        color: #0e87e6;
+                    }
+
+        #tablemask {
+            position: fixed;
+            z-index: 9998;
+            width: 100%;
+            height: 25px;
+            background-color: white;
+        }
+
+        .btn_td {
+            padding-top: 8px;
+        }
+
+        .searchtable button {
+            margin-right: 25px;
+            background: #0075d2;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: #fff;
+            cursor: pointer;
+            height: 38px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #InstallTimeStart {
+            width: 380px;
+        }
+
+        #InstallTimeEnd {
+            width: 380px;
+        }
+
+        .i_tr {
+            margin-top: 0px !important;
+            height: 20px !important;
+            padding: 0px;
+        }
+
+            .i_tr td {
+                margin-top: 0px !important;
+                height: 20px !important;
+                padding: 0px;
+            }
+    </style>
+</head>
+<body>
+    <div id="search">
+        <table class="searchtable">
+            <tbody id="search_tbd">
+                <tr>
+                    <td>经度：</td>
+                    <td><input id="lng" placeholder="请输入经度" /></td>
+                </tr>
+                <tr>
+                    <td>纬度：</td>
+                    <td><input id="lat" placeholder="请输入纬度" /></td>
+                </tr>
+                <tr>
+                    <td>标签名称：</td>
+                    <td><input id="markershowname" placeholder="请输入标签名称" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="btn_td"><button id="NotConvert">不转换</button><button id="Convert">转换</button><button id="GCJ02">gcj02转换</button><button id="ReSetAll">重置</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    //GPS坐标
+    var x = 116.32715863448607;
+    var y = 39.990912172420714;
+    var ggPoint = new BMap.Point(x, y);
+
+    //地图初始化
+    var bm = new BMap.Map("allmap");
+    bm.centerAndZoom(ggPoint, 15);
+    bm.addControl(new BMap.NavigationControl());
+    bm.enableScrollWheelZoom(true);
+</script>
+<script>
+    $(function () {
+        $("#showsearch").bind("click", function () {
+            var isshow = $(this).attr("isshow")
+            if (isshow == 1) { //不显示
+                $("#search").hide();
+                $(this).css("right", "2px")
+                $(this).attr("isshow", "0")
+            }
+            else {
+                $("#search").show();
+                $(this).css("right", "527px")
+                $(this).attr("isshow", "1")
+            }
+        })
+    });
+    $("#NotConvert").bind("click", function () {
+		//-===========临时代码
+		var bdary = new BMap.Boundary();
+        bdary.get("成都市", function(rs){       //获取行政区域
+        //这里是用户自己的函数。   
+		 var count = rs.boundaries.length; //行政区域的点有多少个
+        });    
+         //-===========
+        var x = $("#lng").val();
+        var y = $("#lat").val();
+        var mname = $("#markershowname").val();
+        var temp = new BMap.Point(x, y);
+        //添加gps marker和label
+        var markergg = new BMap.Marker(temp);
+        bm.addOverlay(markergg); //添加GPS marker
+        var labelgg = new BMap.Label(mname + "(未转换)", { offset: new BMap.Size(20, -10) });
+        markergg.setLabel(labelgg); //添加GPS label
+
+        bm.centerAndZoom(temp, 15);
+    });
+    $("#Convert").bind("click", function () {
+        var x = $("#lng").val();
+        var y = $("#lat").val();
+        var mname = $("#markershowname").val();
+        var temp = new BMap.Point(x, y);
+        //坐标转换完之后的回调函数
+        translateCallback = function (data) {
+            if (data.status === 0) {
+                var marker = new BMap.Marker(data.points[0]);
+                bm.addOverlay(marker);
+                var label = new BMap.Label(mname + "(转换)", { offset: new BMap.Size(20, -10) });
+                marker.setLabel(label); //添加百度label
+                bm.setCenter(data.points[0]);
+            }
+        }
+        var convertor = new BMap.Convertor();
+        var pointArr = [];
+        pointArr.push(temp);
+        convertor.translate(pointArr, 1, 5, translateCallback)
+        bm.centerAndZoom(temp, 15);
+    });
+    $("#GCJ02").bind("click", function () {
+        var x = $("#lng").val();
+        var y = $("#lat").val();
+        var mname = $("#markershowname").val();
+        var temp = new BMap.Point(x, y);
+        //坐标转换完之后的回调函数
+        translateCallback = function (data) {
+            if (data.status === 0) {
+                var marker = new BMap.Marker(data.points[0]);
+                bm.addOverlay(marker);
+                var label = new BMap.Label(mname + "(GCj02转换)", { offset: new BMap.Size(20, -10) });
+                marker.setLabel(label); //添加百度label
+                bm.setCenter(data.points[0]);
+            }
+        }
+        var convertor = new BMap.Convertor();
+        var pointArr = [];
+        pointArr.push(temp);
+        convertor.translate(pointArr, 3, 5, translateCallback)
+        bm.centerAndZoom(temp, 15);
+    });
+    $("#ReSetAll").bind("click", function () {
+        $("#lng").val("");
+        $("#lat").val("");
+        $("#markershowname").val("");
+    });
+    //取值为如下：
+    //1：GPS设备获取的角度坐标，wgs84坐标;
+    //2：GPS获取的米制坐标、sogou地图所用坐标;
+    //3：google地图、soso地图、aliyun地图、mapabc地图和amap地图所用坐标，国测局坐标;
+    //4：3中列表地图坐标对应的米制坐标;
+    //5：百度地图采用的经纬度坐标;
+    //6：百度地图采用的米制坐标;
+    //7：mapbar地图坐标;
+    //8：51地图坐标
+
+    //有两种可供选择：5、6。
+    //5：bd09ll(百度经纬度坐标),
+    //6：bd09mc(百度米制经纬度坐标);
+</script>

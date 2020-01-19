@@ -1,0 +1,9 @@
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\bin\Debug\LocationIp.exe.config
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\bin\Debug\LocationIp.exe
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\bin\Debug\LocationIp.pdb
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\obj\Debug\LocationIp.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\obj\Debug\LocationIp.Form1.resources
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\obj\Debug\LocationIp.Properties.Resources.resources
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\obj\Debug\LocationIp.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\obj\Debug\LocationIp.exe
+C:\Users\Administrator\Desktop\工具Html\LocationIp\LocationIp\obj\Debug\LocationIp.pdb

@@ -1,0 +1,2332 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "??????";
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Padq2FiGrjmUOQI30WfcIzfd"></script>
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+    <title>百度定位</title>
+    <style>
+        #search {
+            padding: 20px 10px;
+            position: fixed;
+            margin: 0px;
+            width: 500px;
+            border: 1px solid #bab6b6;
+            right: 5px;
+            background-color: white;
+            z-index: 9999;
+        }
+
+        #showsearch {
+            position: fixed;
+            margin: 0px;
+            width: 15px;
+            height: 75px;
+            background-color: #1b151f;
+            right: 527px;
+            top: 10px;
+            color: white;
+            padding: 5px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .searchtable td input {
+            width: 200px;
+            height: 32px;
+            border: 1px solid #0e87e6;
+            border-radius: 3px;
+        }
+
+        .searchtable {
+            font-size: 14px;
+            border: none;
+        }
+
+            .searchtable tr {
+                border: none !important;
+                margin: 6px;
+                height: 45px;
+            }
+
+                .searchtable tr td {
+                    border: none !important;
+                    margin: 5px;
+                    height: 38px;
+                }
+
+                    .searchtable tr td:first-child {
+                        text-align: right;
+                        color: #0e87e6;
+                    }
+
+        #tablemask {
+            position: fixed;
+            z-index: 9998;
+            width: 100%;
+            height: 25px;
+            background-color: white;
+        }
+
+        .btn_td {
+            padding-top: 8px;
+        }
+
+        .searchtable button {
+            margin-right: 25px;
+            background: #0075d2;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: #fff;
+            cursor: pointer;
+            height: 38px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #InstallTimeStart {
+            width: 380px;
+        }
+
+        #InstallTimeEnd {
+            width: 380px;
+        }
+
+        .i_tr {
+            margin-top: 0px !important;
+            height: 20px !important;
+            padding: 0px;
+        }
+
+            .i_tr td {
+                margin-top: 0px !important;
+                height: 20px !important;
+                padding: 0px;
+            }
+    </style>
+</head>
+<body>
+    <div id="search">
+        <table class="searchtable">
+            <tbody id="search_tbd">
+                <tr>
+                    <td>经度：</td>
+                    <td><input id="lng" placeholder="请输入经度" /></td>
+                </tr>
+                <tr>
+                    <td>纬度：</td>
+                    <td><input id="lat" placeholder="请输入纬度" /></td>
+                </tr>
+                <tr>
+                    <td>标签名称：</td>
+                    <td><input id="markershowname" placeholder="请输入标签名称" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="btn_td"><button id="NotConvert">不转换</button><button id="Convert">转换</button><button id="GCJ02">gcj02转换</button><button id="ReSetAll">重置</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    //GPS坐标
+    var x = 104.06575099999998;
+    var y =30.657453;
+    var ggPoint = new BMap.Point(x, y);
+
+    //地图初始化
+    var bm = new BMap.Map("allmap");
+    bm.centerAndZoom(ggPoint, 15);
+    bm.addControl(new BMap.NavigationControl());
+    bm.enableScrollWheelZoom(true);
+</script>
+<script>
+    var cdSubWay = [
+    {
+        "ID": "1",
+        "CityName": "成都",
+        "LineID": "10",
+        "LineName": "成都地铁10号线",
+        "StationSequence": "1",
+        "StationName": "双流机场2航站楼",
+        "StationLng": "103.955489",
+        "StationLat": "30.569553"
+    },
+    {
+        "ID": "2",
+        "CityName": "成都",
+        "LineID": "10",
+        "LineName": "成都地铁10号线",
+        "StationSequence": "2",
+        "StationName": "双流机场1航站楼",
+        "StationLng": "103.95929899999999",
+        "StationLat": "30.578354"
+    },
+    {
+        "ID": "3",
+        "CityName": "成都",
+        "LineID": "10",
+        "LineName": "成都地铁10号线",
+        "StationSequence": "3",
+        "StationName": "金花",
+        "StationLng": "103.970935",
+        "StationLat": "30.592057"
+    },
+    {
+        "ID": "4",
+        "CityName": "成都",
+        "LineID": "10",
+        "LineName": "成都地铁10号线",
+        "StationSequence": "4",
+        "StationName": "华兴",
+        "StationLng": "104.00144699999998",
+        "StationLat": "30.598924"
+    },
+    {
+        "ID": "5",
+        "CityName": "成都",
+        "LineID": "10",
+        "LineName": "成都地铁10号线",
+        "StationSequence": "5",
+        "StationName": "簇锦",
+        "StationLng": "104.00801799999999",
+        "StationLat": "30.611033"
+    },
+    {
+        "ID": "6",
+        "CityName": "成都",
+        "LineID": "10",
+        "LineName": "成都地铁10号线",
+        "StationSequence": "6",
+        "StationName": "太平园",
+        "StationLng": "104.02159899999998",
+        "StationLat": "30.625475"
+    },
+    {
+        "ID": "7",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "1",
+        "StationName": "天府新站",
+        "StationLng": "104.16746599999999",
+        "StationLat": "30.393503"
+    },
+    {
+        "ID": "8",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "2",
+        "StationName": "兴隆",
+        "StationLng": "104.104107",
+        "StationLat": "30.430023"
+    },
+    {
+        "ID": "9",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "3",
+        "StationName": "福州路",
+        "StationLng": "104.07225299999999",
+        "StationLat": "30.446577"
+    },
+    {
+        "ID": "10",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "4",
+        "StationName": "海昌路",
+        "StationLng": "104.07106799999997",
+        "StationLat": "30.492163"
+    },
+    {
+        "ID": "11",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "5",
+        "StationName": "世纪城",
+        "StationLng": "104.06902300000002",
+        "StationLat": "30.554866"
+    },
+    {
+        "ID": "12",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "6",
+        "StationName": "锦城广场",
+        "StationLng": "104.06861600000002",
+        "StationLat": "30.567028"
+    },
+    {
+        "ID": "13",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "7",
+        "StationName": "孵化园",
+        "StationLng": "104.06826999999998",
+        "StationLat": "30.575732"
+    },
+    {
+        "ID": "14",
+        "CityName": "成都",
+        "LineID": "18",
+        "LineName": "成都地铁18号线",
+        "StationSequence": "8",
+        "StationName": "火车南站",
+        "StationLng": "104.06739299999998",
+        "StationLat": "30.605459"
+    },
+    {
+        "ID": "15",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "1",
+        "StationName": "广都",
+        "StationLng": "104.07571300000001",
+        "StationLat": "30.510752"
+    },
+    {
+        "ID": "16",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "2",
+        "StationName": "四河",
+        "StationLng": "104.07012500000002",
+        "StationLat": "30.516133"
+    },
+    {
+        "ID": "17",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "3",
+        "StationName": "华府大道",
+        "StationLng": "104.06983600000001",
+        "StationLat": "30.525746"
+    },
+    {
+        "ID": "18",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "4",
+        "StationName": "天府五街",
+        "StationLng": "104.06950999999998",
+        "StationLat": "30.537107"
+    },
+    {
+        "ID": "19",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "5",
+        "StationName": "天府三街",
+        "StationLng": "104.06920400000001",
+        "StationLat": "30.546203"
+    },
+    {
+        "ID": "20",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "6",
+        "StationName": "世纪城",
+        "StationLng": "104.06893000000002",
+        "StationLat": "30.55487"
+    },
+    {
+        "ID": "21",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "7",
+        "StationName": "锦城广场",
+        "StationLng": "104.066528",
+        "StationLat": "30.567722"
+    },
+    {
+        "ID": "22",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "8",
+        "StationName": "孵化园",
+        "StationLng": "104.06431299999997",
+        "StationLat": "30.575873"
+    },
+    {
+        "ID": "23",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "9",
+        "StationName": "金融城",
+        "StationLng": "104.06414699999999",
+        "StationLat": "30.582579"
+    },
+    {
+        "ID": "24",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "10",
+        "StationName": "高新",
+        "StationLng": "104.06383199999999",
+        "StationLat": "30.59437"
+    },
+    {
+        "ID": "25",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "11",
+        "StationName": "火车南站",
+        "StationLng": "104.06739299999998",
+        "StationLat": "30.605459"
+    },
+    {
+        "ID": "26",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "12",
+        "StationName": "桐梓林",
+        "StationLng": "104.067115",
+        "StationLat": "30.61531"
+    },
+    {
+        "ID": "27",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "13",
+        "StationName": "倪家桥",
+        "StationLng": "104.06688500000001",
+        "StationLat": "30.624773"
+    },
+    {
+        "ID": "28",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "14",
+        "StationName": "省体育馆",
+        "StationLng": "104.06660599999998",
+        "StationLat": "30.633361"
+    },
+    {
+        "ID": "29",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "15",
+        "StationName": "华西坝",
+        "StationLng": "104.06627900000001",
+        "StationLat": "30.642821"
+    },
+    {
+        "ID": "30",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "16",
+        "StationName": "锦江宾馆",
+        "StationLng": "104.06605300000001",
+        "StationLat": "30.650046"
+    },
+    {
+        "ID": "31",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "17",
+        "StationName": "天府广场",
+        "StationLng": "104.06575099999998",
+        "StationLat": "30.657453"
+    },
+    {
+        "ID": "32",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "18",
+        "StationName": "骡马市",
+        "StationLng": "104.06561699999997",
+        "StationLat": "30.666514"
+    },
+    {
+        "ID": "33",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "19",
+        "StationName": "文殊院",
+        "StationLng": "104.068036",
+        "StationLat": "30.672535"
+    },
+    {
+        "ID": "34",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "20",
+        "StationName": "人民北路",
+        "StationLng": "104.07308899999998",
+        "StationLat": "30.685078"
+    },
+    {
+        "ID": "35",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "21",
+        "StationName": "火车北站",
+        "StationLng": "104.07397200000003",
+        "StationLat": "30.695568"
+    },
+    {
+        "ID": "36",
+        "CityName": "成都",
+        "LineID": "1",
+        "LineName": "成都地铁1号线",
+        "StationSequence": "22",
+        "StationName": "升仙湖",
+        "StationLng": "104.08347400000002",
+        "StationLat": "30.704625"
+    },
+    {
+        "ID": "37",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "1",
+        "StationName": "犀浦",
+        "StationLng": "103.97143299999999",
+        "StationLat": "30.758172"
+    },
+    {
+        "ID": "38",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "2",
+        "StationName": "天河路",
+        "StationLng": "103.97616299999999",
+        "StationLat": "30.745883"
+    },
+    {
+        "ID": "39",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "3",
+        "StationName": "百草路",
+        "StationLng": "103.97932700000001",
+        "StationLat": "30.733062"
+    },
+    {
+        "ID": "40",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "4",
+        "StationName": "金周路",
+        "StationLng": "103.996175",
+        "StationLat": "30.721638"
+    },
+    {
+        "ID": "41",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "5",
+        "StationName": "金科北路",
+        "StationLng": "104.00663500000002",
+        "StationLat": "30.720762"
+    },
+    {
+        "ID": "42",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "6",
+        "StationName": "迎宾大道",
+        "StationLng": "104.01352800000001",
+        "StationLat": "30.713168"
+    },
+    {
+        "ID": "43",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "7",
+        "StationName": "茶店子客运站",
+        "StationLng": "104.01369199999999",
+        "StationLat": "30.705986"
+    },
+    {
+        "ID": "44",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "8",
+        "StationName": "羊犀立交",
+        "StationLng": "104.012655",
+        "StationLat": "30.693913"
+    },
+    {
+        "ID": "45",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "9",
+        "StationName": "一品天下",
+        "StationLng": "104.01971700000001",
+        "StationLat": "30.689007"
+    },
+    {
+        "ID": "46",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "10",
+        "StationName": "蜀汉路东",
+        "StationLng": "104.02904799999999",
+        "StationLat": "30.682868"
+    },
+    {
+        "ID": "47",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "11",
+        "StationName": "白果林",
+        "StationLng": "104.033278",
+        "StationLat": "30.673851"
+    },
+    {
+        "ID": "48",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "12",
+        "StationName": "中医大省医院",
+        "StationLng": "104.04059699999999",
+        "StationLat": "30.666176"
+    },
+    {
+        "ID": "49",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "13",
+        "StationName": "通惠门",
+        "StationLng": "104.04852299999999",
+        "StationLat": "30.662088"
+    },
+    {
+        "ID": "50",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "14",
+        "StationName": "人民公园",
+        "StationLng": "104.056779",
+        "StationLat": "30.659324"
+    },
+    {
+        "ID": "51",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "15",
+        "StationName": "天府广场",
+        "StationLng": "104.06676400000003",
+        "StationLat": "30.657453"
+    },
+    {
+        "ID": "52",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "16",
+        "StationName": "春熙路",
+        "StationLng": "104.080019",
+        "StationLat": "30.653389"
+    },
+    {
+        "ID": "53",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "17",
+        "StationName": "东门大桥",
+        "StationLng": "104.08730800000001",
+        "StationLat": "30.648192"
+    },
+    {
+        "ID": "54",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "18",
+        "StationName": "牛王庙",
+        "StationLng": "104.09448299999997",
+        "StationLat": "30.644976"
+    },
+    {
+        "ID": "55",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "19",
+        "StationName": "牛市口",
+        "StationLng": "104.107662",
+        "StationLat": "30.637912"
+    },
+    {
+        "ID": "56",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "20",
+        "StationName": "东大路",
+        "StationLng": "104.11275799999999",
+        "StationLat": "30.633295"
+    },
+    {
+        "ID": "57",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "21",
+        "StationName": "塔子山公园",
+        "StationLng": "104.12292200000002",
+        "StationLat": "30.629465"
+    },
+    {
+        "ID": "58",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "22",
+        "StationName": "成都东客站",
+        "StationLng": "104.14041299999997",
+        "StationLat": "30.629296"
+    },
+    {
+        "ID": "59",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "23",
+        "StationName": "成渝立交",
+        "StationLng": "104.14743199999998",
+        "StationLat": "30.624822"
+    },
+    {
+        "ID": "60",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "24",
+        "StationName": "惠王陵",
+        "StationLng": "104.152086",
+        "StationLat": "30.612075"
+    },
+    {
+        "ID": "61",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "25",
+        "StationName": "洪河",
+        "StationLng": "104.15751",
+        "StationLat": "30.605015"
+    },
+    {
+        "ID": "62",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "26",
+        "StationName": "成都行政学院",
+        "StationLng": "104.170954",
+        "StationLat": "30.596975"
+    },
+    {
+        "ID": "63",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "27",
+        "StationName": "大面铺",
+        "StationLng": "104.20129800000001",
+        "StationLat": "30.5924"
+    },
+    {
+        "ID": "64",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "28",
+        "StationName": "连山坡",
+        "StationLng": "104.21275700000001",
+        "StationLat": "30.58758"
+    },
+    {
+        "ID": "65",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "29",
+        "StationName": "界牌",
+        "StationLng": "104.22513400000003",
+        "StationLat": "30.582802"
+    },
+    {
+        "ID": "66",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "30",
+        "StationName": "书房",
+        "StationLng": "104.24213399999996",
+        "StationLat": "30.575626"
+    },
+    {
+        "ID": "67",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "31",
+        "StationName": "龙平路",
+        "StationLng": "104.25898799999999",
+        "StationLat": "30.572923"
+    },
+    {
+        "ID": "68",
+        "CityName": "成都",
+        "LineID": "2",
+        "LineName": "成都地铁2号线",
+        "StationSequence": "32",
+        "StationName": "龙泉驿",
+        "StationLng": "104.268442",
+        "StationLat": "30.560158"
+    },
+    {
+        "ID": "69",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "1",
+        "StationName": "军区总医院",
+        "StationLng": "104.11416700000001",
+        "StationLat": "30.744748"
+    },
+    {
+        "ID": "70",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "2",
+        "StationName": "熊猫大道",
+        "StationLng": "104.108002",
+        "StationLat": "30.725447"
+    },
+    {
+        "ID": "71",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "3",
+        "StationName": "动物园",
+        "StationLng": "104.10314199999999",
+        "StationLat": "30.713648"
+    },
+    {
+        "ID": "72",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "4",
+        "StationName": "昭觉寺南路",
+        "StationLng": "104.09682099999998",
+        "StationLat": "30.702922"
+    },
+    {
+        "ID": "73",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "5",
+        "StationName": "驷马桥",
+        "StationLng": "104.09333700000002",
+        "StationLat": "30.695503"
+    },
+    {
+        "ID": "74",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "6",
+        "StationName": "李家沱",
+        "StationLng": "104.09452799999997",
+        "StationLat": "30.689393"
+    },
+    {
+        "ID": "75",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "7",
+        "StationName": "前锋路",
+        "StationLng": "104.09212400000001",
+        "StationLat": "30.679037"
+    },
+    {
+        "ID": "76",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "8",
+        "StationName": "红星桥",
+        "StationLng": "104.09052600000001",
+        "StationLat": "30.671208"
+    },
+    {
+        "ID": "77",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "9",
+        "StationName": "市二医院",
+        "StationLng": "104.083909",
+        "StationLat": "30.660814"
+    },
+    {
+        "ID": "78",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "10",
+        "StationName": "春熙路",
+        "StationLng": "104.07896599999998",
+        "StationLat": "30.653249"
+    },
+    {
+        "ID": "79",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "11",
+        "StationName": "新南门",
+        "StationLng": "104.07516099999998",
+        "StationLat": "30.644361"
+    },
+    {
+        "ID": "80",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "12",
+        "StationName": "磨子桥",
+        "StationLng": "104.07593300000002",
+        "StationLat": "30.637421"
+    },
+    {
+        "ID": "81",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "13",
+        "StationName": "省体育馆",
+        "StationLng": "104.065677",
+        "StationLat": "30.633531"
+    },
+    {
+        "ID": "82",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "14",
+        "StationName": "衣冠庙",
+        "StationLng": "104.052144",
+        "StationLat": "30.634486"
+    },
+    {
+        "ID": "83",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "15",
+        "StationName": "高升桥",
+        "StationLng": "104.04254500000002",
+        "StationLat": "30.640044"
+    },
+    {
+        "ID": "84",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "16",
+        "StationName": "红牌楼",
+        "StationLng": "104.029878",
+        "StationLat": "30.634704"
+    },
+    {
+        "ID": "85",
+        "CityName": "成都",
+        "LineID": "3",
+        "LineName": "成都地铁3号线",
+        "StationSequence": "17",
+        "StationName": "太平园",
+        "StationLng": "104.02159899999998",
+        "StationLat": "30.625475"
+    },
+    {
+        "ID": "86",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "1",
+        "StationName": "非遗博览园",
+        "StationLng": "103.922483",
+        "StationLat": "30.674085"
+    },
+    {
+        "ID": "87",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "2",
+        "StationName": "蔡桥",
+        "StationLng": "103.94509900000003",
+        "StationLat": "30.669478"
+    },
+    {
+        "ID": "88",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "3",
+        "StationName": "中坝",
+        "StationLng": "103.96411799999998",
+        "StationLat": "30.673492"
+    },
+    {
+        "ID": "89",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "4",
+        "StationName": "成都西站",
+        "StationLng": "103.976586",
+        "StationLat": "30.683655"
+    },
+    {
+        "ID": "90",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "5",
+        "StationName": "清江西路",
+        "StationLng": "103.998583",
+        "StationLat": "30.676596"
+    },
+    {
+        "ID": "91",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "6",
+        "StationName": "文化宫",
+        "StationLng": "104.009413",
+        "StationLat": "30.672258"
+    },
+    {
+        "ID": "92",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "7",
+        "StationName": "西南财大",
+        "StationLng": "104.02011800000002",
+        "StationLat": "30.670471"
+    },
+    {
+        "ID": "93",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "8",
+        "StationName": "草堂北路",
+        "StationLng": "104.02819199999999",
+        "StationLat": "30.669089"
+    },
+    {
+        "ID": "94",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "9",
+        "StationName": "中医大省医院",
+        "StationLng": "104.04059699999999",
+        "StationLat": "30.666176"
+    },
+    {
+        "ID": "95",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "10",
+        "StationName": "宽窄巷子",
+        "StationLng": "104.050678",
+        "StationLat": "30.665404"
+    },
+    {
+        "ID": "96",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "11",
+        "StationName": "骡马市",
+        "StationLng": "104.066555",
+        "StationLat": "30.667035"
+    },
+    {
+        "ID": "97",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "12",
+        "StationName": "太升南路",
+        "StationLng": "104.07657899999998",
+        "StationLat": "30.664764"
+    },
+    {
+        "ID": "98",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "13",
+        "StationName": "市二医院",
+        "StationLng": "104.08497399999999",
+        "StationLat": "30.660256"
+    },
+    {
+        "ID": "99",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "14",
+        "StationName": "玉双路",
+        "StationLng": "104.09932600000002",
+        "StationLat": "30.653443"
+    },
+    {
+        "ID": "100",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "15",
+        "StationName": "双桥路",
+        "StationLng": "104.11327299999999",
+        "StationLat": "30.64697"
+    },
+    {
+        "ID": "101",
+        "CityName": "成都",
+        "LineID": "4",
+        "LineName": "成都地铁4号线",
+        "StationSequence": "16",
+        "StationName": "万年场",
+        "StationLng": "104.11918800000001",
+        "StationLat": "30.644231"
+    },
+    {
+        "ID": "102",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "1",
+        "StationName": "回龙",
+        "StationLng": "104.01237300000003",
+        "StationLat": "30.44441"
+    },
+    {
+        "ID": "103",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "2",
+        "StationName": "龙马路",
+        "StationLng": "104.02115400000002",
+        "StationLat": "30.459815"
+    },
+    {
+        "ID": "104",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "3",
+        "StationName": "高峰",
+        "StationLng": "104.02786500000002",
+        "StationLat": "30.471791"
+    },
+    {
+        "ID": "105",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "4",
+        "StationName": "南湖立交",
+        "StationLng": "104.03247899999997",
+        "StationLat": "30.485608"
+    },
+    {
+        "ID": "106",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "5",
+        "StationName": "二江寺",
+        "StationLng": "104.03490399999998",
+        "StationLat": "30.498819"
+    },
+    {
+        "ID": "107",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "6",
+        "StationName": "警官学院",
+        "StationLng": "104.039399",
+        "StationLat": "30.511805"
+    },
+    {
+        "ID": "108",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "7",
+        "StationName": "骑龙",
+        "StationLng": "104.04440699999998",
+        "StationLat": "30.526073"
+    },
+    {
+        "ID": "109",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "8",
+        "StationName": "民乐",
+        "StationLng": "104.04638799999998",
+        "StationLat": "30.542245"
+    },
+    {
+        "ID": "110",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "9",
+        "StationName": "大源",
+        "StationLng": "104.04631",
+        "StationLat": "30.551293"
+    },
+    {
+        "ID": "111",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "10",
+        "StationName": "锦城湖",
+        "StationLng": "104.046107",
+        "StationLat": "30.564172"
+    },
+    {
+        "ID": "112",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "11",
+        "StationName": "锦城大道",
+        "StationLng": "104.05027799999999",
+        "StationLat": "30.575321"
+    },
+    {
+        "ID": "113",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "12",
+        "StationName": "交子大道",
+        "StationLng": "104.05017099999998",
+        "StationLat": "30.582222"
+    },
+    {
+        "ID": "114",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "13",
+        "StationName": "市一医院",
+        "StationLng": "104.05039599999998",
+        "StationLat": "30.588383"
+    },
+    {
+        "ID": "115",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "14",
+        "StationName": "石羊立交",
+        "StationLng": "104.05073900000002",
+        "StationLat": "30.59421"
+    },
+    {
+        "ID": "116",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "15",
+        "StationName": "神仙树",
+        "StationLng": "104.04923200000002",
+        "StationLat": "30.608994"
+    },
+    {
+        "ID": "117",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "16",
+        "StationName": "九兴大道",
+        "StationLng": "104.03839099999999",
+        "StationLat": "30.621506"
+    },
+    {
+        "ID": "118",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "17",
+        "StationName": "科园",
+        "StationLng": "104.038388",
+        "StationLat": "30.633349"
+    },
+    {
+        "ID": "119",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "18",
+        "StationName": "高升桥",
+        "StationLng": "104.04254500000002",
+        "StationLat": "30.640044"
+    },
+    {
+        "ID": "120",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "19",
+        "StationName": "省骨科医院",
+        "StationLng": "104.04102499999999",
+        "StationLat": "30.651691"
+    },
+    {
+        "ID": "121",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "20",
+        "StationName": "青羊宫",
+        "StationLng": "104.04079999999999",
+        "StationLat": "30.658917"
+    },
+    {
+        "ID": "122",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "21",
+        "StationName": "中医大省医院",
+        "StationLng": "104.04059999999998",
+        "StationLat": "30.666181"
+    },
+    {
+        "ID": "123",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "22",
+        "StationName": "抚琴",
+        "StationLng": "104.041203",
+        "StationLat": "30.67605"
+    },
+    {
+        "ID": "124",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "23",
+        "StationName": "花牌坊",
+        "StationLng": "104.047978",
+        "StationLat": "30.683579"
+    },
+    {
+        "ID": "125",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "24",
+        "StationName": "西北桥",
+        "StationLng": "104.05424399999998",
+        "StationLat": "30.684874"
+    },
+    {
+        "ID": "126",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "25",
+        "StationName": "北站西二路",
+        "StationLng": "104.06630100000001",
+        "StationLat": "30.694702"
+    },
+    {
+        "ID": "127",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "26",
+        "StationName": "赛云台",
+        "StationLng": "104.066553",
+        "StationLat": "30.700172"
+    },
+    {
+        "ID": "128",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "27",
+        "StationName": "五块石",
+        "StationLng": "104.06417699999997",
+        "StationLat": "30.707884"
+    },
+    {
+        "ID": "129",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "28",
+        "StationName": "福宁路",
+        "StationLng": "104.05951800000003",
+        "StationLat": "30.71584"
+    },
+    {
+        "ID": "130",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "29",
+        "StationName": "洞子口",
+        "StationLng": "104.05825199999998",
+        "StationLat": "30.722425"
+    },
+    {
+        "ID": "131",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "30",
+        "StationName": "泉水路",
+        "StationLng": "104.05834500000003",
+        "StationLat": "30.73025"
+    },
+    {
+        "ID": "132",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "31",
+        "StationName": "古柏",
+        "StationLng": "104.059236",
+        "StationLat": "30.746093"
+    },
+    {
+        "ID": "133",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "32",
+        "StationName": "皇花园",
+        "StationLng": "104.05927300000002",
+        "StationLat": "30.752572"
+    },
+    {
+        "ID": "134",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "33",
+        "StationName": "石犀公园",
+        "StationLng": "104.05971799999998",
+        "StationLat": "30.760916"
+    },
+    {
+        "ID": "135",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "34",
+        "StationName": "大丰",
+        "StationLng": "104.064256",
+        "StationLat": "30.771674"
+    },
+    {
+        "ID": "136",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "35",
+        "StationName": "杜家碾",
+        "StationLng": "104.07595900000001",
+        "StationLat": "30.771587"
+    },
+    {
+        "ID": "137",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "36",
+        "StationName": "九道堰",
+        "StationLng": "104.08408600000001",
+        "StationLat": "30.771308"
+    },
+    {
+        "ID": "138",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "37",
+        "StationName": "幸福桥",
+        "StationLng": "104.08921800000002",
+        "StationLat": "30.778875"
+    },
+    {
+        "ID": "139",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "38",
+        "StationName": "北部商贸城",
+        "StationLng": "104.08885700000002",
+        "StationLat": "30.793529"
+    },
+    {
+        "ID": "140",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "39",
+        "StationName": "廖家湾",
+        "StationLng": "104.09138899999999",
+        "StationLat": "30.809575"
+    },
+    {
+        "ID": "141",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "40",
+        "StationName": "柏水场",
+        "StationLng": "104.093234",
+        "StationLat": "30.814369"
+    },
+    {
+        "ID": "142",
+        "CityName": "成都",
+        "LineID": "5",
+        "LineName": "成都地铁5号线",
+        "StationSequence": "41",
+        "StationName": "华桂路",
+        "StationLng": "104.09937100000002",
+        "StationLat": "30.829967"
+    },
+    {
+        "ID": "143",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "1",
+        "StationName": "望丛祠",
+        "StationLng": "103.87772799999999",
+        "StationLat": "30.807559"
+    },
+    {
+        "ID": "144",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "2",
+        "StationName": "和平街",
+        "StationLng": "103.88752599999998",
+        "StationLat": "30.80031"
+    },
+    {
+        "ID": "145",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "3",
+        "StationName": "郫筒",
+        "StationLng": "103.89450099999999",
+        "StationLat": "30.796068"
+    },
+    {
+        "ID": "146",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "4",
+        "StationName": "蜀新大道",
+        "StationLng": "103.904583",
+        "StationLat": "30.790474"
+    },
+    {
+        "ID": "147",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "5",
+        "StationName": "檬梓",
+        "StationLng": "103.91411",
+        "StationLat": "30.784888"
+    },
+    {
+        "ID": "148",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "6",
+        "StationName": "尚锦路",
+        "StationLng": "103.923294",
+        "StationLat": "30.777418"
+    },
+    {
+        "ID": "149",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "7",
+        "StationName": "红高路",
+        "StationLng": "103.938245",
+        "StationLat": "30.768695"
+    },
+    {
+        "ID": "150",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "8",
+        "StationName": "天宇路",
+        "StationLng": "103.95469400000002",
+        "StationLat": "30.754105"
+    },
+    {
+        "ID": "151",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "9",
+        "StationName": "犀浦",
+        "StationLng": "103.97143299999999",
+        "StationLat": "30.758172"
+    },
+    {
+        "ID": "152",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "10",
+        "StationName": "兴业北街",
+        "StationLng": "103.98319100000003",
+        "StationLat": "30.758489"
+    },
+    {
+        "ID": "153",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "11",
+        "StationName": "梓潼宫",
+        "StationLng": "103.993248",
+        "StationLat": "30.747951"
+    },
+    {
+        "ID": "154",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "12",
+        "StationName": "侯家桥",
+        "StationLng": "104.00424199999998",
+        "StationLat": "30.73776"
+    },
+    {
+        "ID": "155",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "13",
+        "StationName": "兴盛",
+        "StationLng": "104.02155399999998",
+        "StationLat": "30.730837"
+    },
+    {
+        "ID": "156",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "14",
+        "StationName": "青杠",
+        "StationLng": "104.02786800000001",
+        "StationLat": "30.723099"
+    },
+    {
+        "ID": "157",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "15",
+        "StationName": "西华大道",
+        "StationLng": "104.03258800000003",
+        "StationLat": "30.717048"
+    },
+    {
+        "ID": "158",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "16",
+        "StationName": "金府",
+        "StationLng": "104.03850899999998",
+        "StationLat": "30.709481"
+    },
+    {
+        "ID": "159",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "17",
+        "StationName": "星河",
+        "StationLng": "104.04317400000002",
+        "StationLat": "30.7035"
+    },
+    {
+        "ID": "160",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "18",
+        "StationName": "西南交大",
+        "StationLng": "104.049601",
+        "StationLat": "30.694702"
+    },
+    {
+        "ID": "161",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "19",
+        "StationName": "沙湾",
+        "StationLng": "104.051108",
+        "StationLat": "30.689697"
+    },
+    {
+        "ID": "162",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "20",
+        "StationName": "西北桥",
+        "StationLng": "104.05424399999998",
+        "StationLat": "30.684874"
+    },
+    {
+        "ID": "163",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "21",
+        "StationName": "人民北路",
+        "StationLng": "104.07274799999999",
+        "StationLat": "30.685859"
+    },
+    {
+        "ID": "164",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "22",
+        "StationName": "梁家巷",
+        "StationLng": "104.083123",
+        "StationLat": "30.682358"
+    },
+    {
+        "ID": "165",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "23",
+        "StationName": "前锋路",
+        "StationLng": "104.09199899999999",
+        "StationLat": "30.678209"
+    },
+    {
+        "ID": "166",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "24",
+        "StationName": "建设北路",
+        "StationLng": "104.09832499999999",
+        "StationLat": "30.672309"
+    },
+    {
+        "ID": "167",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "25",
+        "StationName": "新鸿路",
+        "StationLng": "104.10233099999999",
+        "StationLat": "30.662202"
+    },
+    {
+        "ID": "168",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "26",
+        "StationName": "玉双路",
+        "StationLng": "104.09839299999999",
+        "StationLat": "30.653762"
+    },
+    {
+        "ID": "169",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "27",
+        "StationName": "牛王庙",
+        "StationLng": "104.09333500000002",
+        "StationLat": "30.645447"
+    },
+    {
+        "ID": "170",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "28",
+        "StationName": "顺江路",
+        "StationLng": "104.09270700000002",
+        "StationLat": "30.636124"
+    },
+    {
+        "ID": "171",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "29",
+        "StationName": "三官堂",
+        "StationLng": "104.094896",
+        "StationLat": "30.629576"
+    },
+    {
+        "ID": "172",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "30",
+        "StationName": "东光",
+        "StationLng": "104.09843799999999",
+        "StationLat": "30.619684"
+    },
+    {
+        "ID": "173",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "31",
+        "StationName": "琉璃场",
+        "StationLng": "104.09885600000001",
+        "StationLat": "30.607688"
+    },
+    {
+        "ID": "174",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "32",
+        "StationName": "琉三路",
+        "StationLng": "104.09821699999998",
+        "StationLat": "30.598747"
+    },
+    {
+        "ID": "175",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "33",
+        "StationName": "金石路",
+        "StationLng": "104.08920999999998",
+        "StationLat": "30.590278"
+    },
+    {
+        "ID": "176",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "34",
+        "StationName": "三色路",
+        "StationLng": "104.08350300000001",
+        "StationLat": "30.576987"
+    },
+    {
+        "ID": "177",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "35",
+        "StationName": "中和",
+        "StationLng": "104.09646199999997",
+        "StationLat": "30.558056"
+    },
+    {
+        "ID": "178",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "36",
+        "StationName": "张家寺",
+        "StationLng": "104.098363",
+        "StationLat": "30.550189"
+    },
+    {
+        "ID": "179",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "37",
+        "StationName": "陆肖",
+        "StationLng": "104.09832499999999",
+        "StationLat": "30.537911"
+    },
+    {
+        "ID": "180",
+        "CityName": "成都",
+        "LineID": "6",
+        "LineName": "成都地铁6号线",
+        "StationSequence": "38",
+        "StationName": "观东",
+        "StationLng": "104.09848",
+        "StationLat": "30.528301"
+    },
+    {
+        "ID": "181",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "1",
+        "StationName": "火车北站",
+        "StationLng": "104.07385599999998",
+        "StationLat": "30.695919"
+    },
+    {
+        "ID": "182",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "2",
+        "StationName": "驷马桥",
+        "StationLng": "104.093955",
+        "StationLat": "30.695637"
+    },
+    {
+        "ID": "183",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "3",
+        "StationName": "府青路",
+        "StationLng": "104.10744399999999",
+        "StationLat": "30.69434"
+    },
+    {
+        "ID": "184",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "4",
+        "StationName": "八里庄",
+        "StationLng": "104.11893299999997",
+        "StationLat": "30.686542"
+    },
+    {
+        "ID": "185",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "5",
+        "StationName": "二仙桥",
+        "StationLng": "104.12659500000001",
+        "StationLat": "30.680739"
+    },
+    {
+        "ID": "186",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "6",
+        "StationName": "理工大学",
+        "StationLng": "104.13665300000002",
+        "StationLat": "30.671819"
+    },
+    {
+        "ID": "187",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "7",
+        "StationName": "崔家店",
+        "StationLng": "104.13662",
+        "StationLat": "30.665681"
+    },
+    {
+        "ID": "188",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "8",
+        "StationName": "双店路",
+        "StationLng": "104.138372",
+        "StationLat": "30.654816"
+    },
+    {
+        "ID": "189",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "9",
+        "StationName": "槐树店",
+        "StationLng": "104.139295",
+        "StationLat": "30.649132"
+    },
+    {
+        "ID": "190",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "10",
+        "StationName": "建材南路",
+        "StationLng": "104.13994400000001",
+        "StationLat": "30.639359"
+    },
+    {
+        "ID": "191",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "11",
+        "StationName": "成都东客站",
+        "StationLng": "104.14061500000003",
+        "StationLat": "30.629243"
+    },
+    {
+        "ID": "192",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "12",
+        "StationName": "大观",
+        "StationLng": "104.13226199999997",
+        "StationLat": "30.62156"
+    },
+    {
+        "ID": "193",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "13",
+        "StationName": "狮子山",
+        "StationLng": "104.12402099999997",
+        "StationLat": "30.616241"
+    },
+    {
+        "ID": "194",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "14",
+        "StationName": "川师",
+        "StationLng": "104.11496799999998",
+        "StationLat": "30.609398"
+    },
+    {
+        "ID": "195",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "15",
+        "StationName": "琉璃场",
+        "StationLng": "104.09900299999998",
+        "StationLat": "30.607424"
+    },
+    {
+        "ID": "196",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "16",
+        "StationName": "三瓦窑",
+        "StationLng": "104.077359",
+        "StationLat": "30.60459"
+    },
+    {
+        "ID": "197",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "17",
+        "StationName": "火车南站",
+        "StationLng": "104.066844",
+        "StationLat": "30.605272"
+    },
+    {
+        "ID": "198",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "18",
+        "StationName": "神仙树",
+        "StationLng": "104.04864700000002",
+        "StationLat": "30.609314"
+    },
+    {
+        "ID": "199",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "19",
+        "StationName": "高朋大道",
+        "StationLng": "104.03412900000001",
+        "StationLat": "30.616355"
+    },
+    {
+        "ID": "200",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "20",
+        "StationName": "太平园",
+        "StationLng": "104.02195499999999",
+        "StationLat": "30.624553"
+    },
+    {
+        "ID": "201",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "21",
+        "StationName": "武侯大道",
+        "StationLng": "104.01342699999998",
+        "StationLat": "30.636201"
+    },
+    {
+        "ID": "202",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "22",
+        "StationName": "龙爪堰",
+        "StationLng": "104.00842899999998",
+        "StationLat": "30.652084"
+    },
+    {
+        "ID": "203",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "23",
+        "StationName": "东坡路",
+        "StationLng": "104.00816199999997",
+        "StationLat": "30.661489"
+    },
+    {
+        "ID": "204",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "24",
+        "StationName": "文化宫",
+        "StationLng": "104.009637",
+        "StationLat": "30.6723"
+    },
+    {
+        "ID": "205",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "25",
+        "StationName": "金沙博物馆",
+        "StationLng": "104.01327600000002",
+        "StationLat": "30.678624"
+    },
+    {
+        "ID": "206",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "26",
+        "StationName": "一品天下",
+        "StationLng": "104.02032400000002",
+        "StationLat": "30.688542"
+    },
+    {
+        "ID": "207",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "27",
+        "StationName": "茶店子",
+        "StationLng": "104.030347",
+        "StationLat": "30.695744"
+    },
+    {
+        "ID": "208",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "28",
+        "StationName": "花照壁",
+        "StationLng": "104.04147499999999",
+        "StationLat": "30.696227"
+    },
+    {
+        "ID": "209",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "29",
+        "StationName": "西南交大",
+        "StationLng": "104.04988400000002",
+        "StationLat": "30.694868"
+    },
+    {
+        "ID": "210",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "30",
+        "StationName": "九里堤",
+        "StationLng": "104.05713000000003",
+        "StationLat": "30.69459"
+    },
+    {
+        "ID": "211",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "31",
+        "StationName": "北站西二路",
+        "StationLng": "104.06627200000003",
+        "StationLat": "30.694559"
+    },
+    {
+        "ID": "212",
+        "CityName": "成都",
+        "LineID": "7",
+        "LineName": "成都地铁7号线",
+        "StationSequence": "32",
+        "StationName": "火车北站",
+        "StationLng": "104.07385599999998",
+        "StationLat": "30.695919"
+    }
+    ];
+    $(function () {
+        $("#showsearch").bind("click", function () {
+            var isshow = $(this).attr("isshow")
+            if (isshow == 1) { //不显示
+                $("#search").hide();
+                $(this).css("right", "2px")
+                $(this).attr("isshow", "0")
+            }
+            else {
+                $("#search").show();
+                $(this).css("right", "527px")
+                $(this).attr("isshow", "1")
+            }
+        })
+    });
+    $("#NotConvert").bind("click", function () {
+        for (var i = 0; i < cdSubWay.length; i++) {
+            var tempStation = cdSubWay[i];
+            var notConvertPoint = new BMap.Point(tempStation.StationLng, tempStation.StationLat);
+            var convertor = new BMap.Convertor();
+            (function () {
+                var tempPriAlarm = tempStation;
+                convertor.translate([notConvertPoint], 3, 5, function (bdata) {
+                    AddMarker(tempPriAlarm, bdata)
+                });
+            })(tempStation)
+        }
+        //$.each(cdSubWay, function (index, item) {
+        //        var notConvertPoint = new BMap.Point(item.StationLng, item.StationLat);
+        //        var convertor = new BMap.Convertor();
+        //        var station = item;
+        //        (function () {
+        //            var tempStation = station;
+        //            convertor.translate([notConvertPoint], 0, 5, function (bdata) {
+        //                AddMarker(tempStation, bdata)
+        //            });
+        //        })(station)
+        //})
+    });
+    var AddMarker = function (station,bdata) {
+        var midMarker = new BMap.Marker(bdata.points[0]);
+        midMarker.addEventListener("click", function () {
+            markerClickCallBack(station, bdata);
+        });
+        bm.addOverlay(midMarker);
+    }
+    var markerClickCallBack = function FunMarkerClick(station, bdata) {
+
+        var infoWindow = new BMap.InfoWindow("<a href='http://www.mi.com/'>设备A</a>" + station.StationName);
+        infoWindow.setTitle( station.LineName);
+        bm.openInfoWindow(infoWindow, bdata.points[0]); //开启信息窗口
+    };
+</script>

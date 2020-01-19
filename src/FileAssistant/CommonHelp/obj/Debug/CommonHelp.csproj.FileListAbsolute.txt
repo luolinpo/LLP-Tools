@@ -1,0 +1,5 @@
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\CommonHelp\bin\Debug\CommonHelp.dll
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\CommonHelp\bin\Debug\CommonHelp.pdb
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\CommonHelp\obj\Debug\CommonHelp.dll
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\CommonHelp\obj\Debug\CommonHelp.pdb
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\CommonHelp\bin\Debug\AlarmSystem.ini

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="zyt_basegpsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AlarmSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VehicleID" Type="int" Nullable="false" />
+    <Property Name="parameter1" Type="int" />
+    <Property Name="parameter2" Type="float" />
+    <Property Name="parameter3" Type="text" />
+    <Property Name="parameter4" Type="varchar" MaxLength="512" />
+    <Property Name="parameter5" Type="varchar" MaxLength="512" />
+    <Property Name="State" Type="int" Nullable="false" />
+    <Property Name="EditTime" Type="datetime" Nullable="false" />
+    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="EditUser" Type="varchar" MaxLength="50" />
+    <Property Name="AlarmTypeID" Type="int" Nullable="false" />
+    <Property Name="InOutType" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vehicle">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MobileID" Type="int" />
+    <Property Name="DriverID" Type="int" />
+    <Property Name="VehicleTypeID" Type="int" />
+    <Property Name="ColorID" Type="int" />
+    <Property Name="Plate" Type="nvarchar" MaxLength="50" />
+    <Property Name="VehicleSIM" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VoiceNum" Type="nvarchar" MaxLength="100" />
+    <Property Name="DataNum" Type="nvarchar" MaxLength="100" />
+    <Property Name="GPRSNum" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VehiclePassword" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateTime" Type="datetime" />
+    <Property Name="Creater" Type="int" />
+    <Property Name="LoginPass" Type="nvarchar" MaxLength="50" />
+    <Property Name="LoginEnable" Type="int" />
+    <Property Name="IsEnable" Type="int" />
+    <Property Name="OverdueTime" Type="datetime" />
+    <Property Name="Months" Type="int" />
+    <Property Name="PswState" Type="int" />
+    <Property Name="OilBox" Type="int" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="250" />
+    <Property Name="ClientID" Type="int" />
+    <Property Name="ServerID" Type="int" />
+    <Property Name="Del" Type="int" />
+    <Property Name="Icon" Type="int" />
+    <Property Name="InstallerName" Type="nvarchar" MaxLength="50" />
+    <Property Name="InstallPosition" Type="nvarchar" MaxLength="50" />
+    <Property Name="InstallType" Type="nvarchar" MaxLength="50" />
+    <Property Name="InstallTime" Type="datetime" />
+    <Property Name="Cpys" Type="int" />
+    <Property Name="Sccj" Type="nvarchar" MaxLength="50" />
+    <Property Name="Aliases" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsEnableTime" Type="datetime" />
+    <Property Name="VIN" Type="nvarchar" MaxLength="50" />
+    <Property Name="VehBrandID" Type="int" />
+    <Property Name="VehSeriesID" Type="int" />
+    <Property Name="IPCode" Type="int" />
+    <Property Name="VehicleType" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastModify" Type="datetime" />
+    <Property Name="VehicleStatus" Type="int" />
+  </EntityType>
+  <EntityContainer Name="zyt_basegpsModelStoreContainer">
+    <EntitySet Name="AlarmSetting" EntityType="Self.AlarmSetting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

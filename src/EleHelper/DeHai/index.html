@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+    <title>小助手</title>
+</head>
+<body> 
+    <div style="margin:18px">
+        <form class="form-horizontal">
+            <div class="form-group form-group-lg">
+                <label class="col-sm-2 control-label" for="formGroupInputLarge">电线截面规格(mm)</label>
+                <div class="col-sm-5">
+                    <select id="wiresize" type="text" class="form-control" placeholder=".col-xs-2">
+                        <option value="18">1.5(电流18A)</option>
+                        <option value="25">2.5(电流25A)</option>
+                        <option value="33">4(电流33A)</option>
+                        <option value="41">6(电流41A)</option>
+                        <option value="57">10(电流57A)</option>
+                        <option value="76">16(电流76A)</option>
+                        <option value="98">25(电流98A)</option>
+                        <option value="115">35(电流115A)</option>
+                        <option value="145">50(电流145A)</option>
+                        <option value="180">70(电流180A)</option>
+                        <option value="225">95(电流225A)</option>
+                        <option value="260">120(电流260A)</option>
+                        <option value="300">150(电流300A)</option>
+                        <option value="345">185(电流345A)</option>
+                        <option value="410">240(电流410A)</option>
+                        <option value="475">300(电流475A)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-group-lg">
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">电压(V)</label>
+                <div class="col-sm-5">
+                    <select id="voltage" type="text" class="form-control" placeholder=".col-xs-2">
+                        <option value="220">220V</option>
+                        <option value="110">110V</option>
+                        <option value="380">380V</option>
+                        <option value="381">380V(3相)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-group-lg">
+                <div class="col-sm-5">
+                    <button type="button" class="btn btn-primary" onclick="Cal()">计算</button>
+                </div>
+            </div>
+            <div class="form-group form-group-lg">
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">理论最大负载功率(w)</label>
+                <div class="col-sm-5">
+                    <input id="power" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group form-group-lg">
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">推荐负载载功率(w)</label>
+                <div class="col-sm-5">
+                    <input id="power08" type="text" class="form-control">
+                </div>
+            </div>
+            <div>
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                    家用： 功率（P）=电压（U）*电流（I，根据口诀算）*0.8（功率因素）
+                </label>
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                    3相： 功率（P）=电压（U）*电流（I，根据口诀算）*0.8（功率因素）*1.732
+                </label>
+            </div>
+            <hr>
+            <div>
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                    10下五，100上二，
+                    25、35，四、三界，
+                    70、95，两倍半。
+                    穿管、温度，八、九折。
+                    裸线加一半。
+                    铜线升级算。
+                </label>
+            </div>
+            <hr>
+            <div>
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">
+                    电线规格： 1、1.5、 2.5、 4、 6、 10、 16、 25、 35、 50、 70、 95、 120、 150、 185
+                </label>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+
+    function Cal() {
+       
+        var _wiresize = $("#wiresize").val();
+        var _voltage = $("#voltage").val();
+        if (_voltage==381) {
+            var _power = _wiresize * _voltage;
+            $("#power").val(_power);
+            var _power08 = _wiresize * _voltage * 0.8*1.732;
+            $("#power08").val(_power08);
+        }
+        else
+        {
+            var _power = _wiresize * _voltage;
+            $("#power").val(_power);
+            var _power08 = _wiresize * _voltage * 0.8;
+            $("#power08").val(_power08);
+
+        }
+       //var _power = _wiresize * _voltage;
+       //$("#power").val(_power);
+       //var _power08 = _wiresize * _voltage*0.8;
+       //$("#power08").val(_power08);
+    }
+
+</script>

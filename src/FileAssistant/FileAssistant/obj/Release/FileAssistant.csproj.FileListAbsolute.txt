@@ -1,0 +1,15 @@
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\bin\Release\FileAssistant.exe.config
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\bin\Release\AlarmSystem.ini
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\bin\Release\FileAssistant.exe
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\bin\Release\FileAssistant.pdb
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\bin\Release\CommonHelp.dll
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\bin\Release\CommonHelp.pdb
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.Classification.resources
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.InsertFrom.resources
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.Main.resources
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.Properties.Resources.resources
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.uc_Rule.resources
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.exe
+C:\Users\Administrator\Desktop\工具Html\FileAssistant\FileAssistant\obj\Release\FileAssistant.pdb

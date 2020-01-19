@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="zyt_basegpsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AlarmSetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VehicleID" Type="int" Nullable="false" />
+          <Property Name="parameter1" Type="int" />
+          <Property Name="parameter2" Type="float" />
+          <Property Name="parameter3" Type="text" />
+          <Property Name="parameter4" Type="varchar" MaxLength="512" />
+          <Property Name="parameter5" Type="varchar" MaxLength="512" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="EditTime" Type="datetime" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="EditUser" Type="varchar" MaxLength="50" />
+          <Property Name="AlarmTypeID" Type="int" Nullable="false" />
+          <Property Name="InOutType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MobileID" Type="int" />
+          <Property Name="DriverID" Type="int" />
+          <Property Name="VehicleTypeID" Type="int" />
+          <Property Name="ColorID" Type="int" />
+          <Property Name="Plate" Type="nvarchar" MaxLength="50" />
+          <Property Name="VehicleSIM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VoiceNum" Type="nvarchar" MaxLength="100" />
+          <Property Name="DataNum" Type="nvarchar" MaxLength="100" />
+          <Property Name="GPRSNum" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VehiclePassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Creater" Type="int" />
+          <Property Name="LoginPass" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoginEnable" Type="int" />
+          <Property Name="IsEnable" Type="int" />
+          <Property Name="OverdueTime" Type="datetime" />
+          <Property Name="Months" Type="int" />
+          <Property Name="PswState" Type="int" />
+          <Property Name="OilBox" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="250" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="ServerID" Type="int" />
+          <Property Name="Del" Type="int" />
+          <Property Name="Icon" Type="int" />
+          <Property Name="InstallerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstallPosition" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstallType" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstallTime" Type="datetime" />
+          <Property Name="Cpys" Type="int" />
+          <Property Name="Sccj" Type="nvarchar" MaxLength="50" />
+          <Property Name="Aliases" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsEnableTime" Type="datetime" />
+          <Property Name="VIN" Type="nvarchar" MaxLength="50" />
+          <Property Name="VehBrandID" Type="int" />
+          <Property Name="VehSeriesID" Type="int" />
+          <Property Name="IPCode" Type="int" />
+          <Property Name="VehicleType" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastModify" Type="datetime" />
+          <Property Name="VehicleStatus" Type="int" />
+        </EntityType>
+        <EntityContainer Name="zyt_basegpsModelStoreContainer">
+          <EntitySet Name="AlarmSetting" EntityType="Self.AlarmSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="zyt_basegpsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AlarmSetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VehicleID" Type="Int32" Nullable="false" />
+          <Property Name="parameter1" Type="Int32" />
+          <Property Name="parameter2" Type="Double" />
+          <Property Name="parameter3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="parameter4" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="parameter5" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <Property Name="EditTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlarmTypeID" Type="Int32" Nullable="false" />
+          <Property Name="InOutType" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MobileID" Type="Int32" />
+          <Property Name="DriverID" Type="Int32" />
+          <Property Name="VehicleTypeID" Type="Int32" />
+          <Property Name="ColorID" Type="Int32" />
+          <Property Name="Plate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleSIM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VoiceNum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DataNum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GPRSNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VehiclePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Creater" Type="Int32" />
+          <Property Name="LoginPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginEnable" Type="Int32" />
+          <Property Name="IsEnable" Type="Int32" />
+          <Property Name="OverdueTime" Type="DateTime" Precision="3" />
+          <Property Name="Months" Type="Int32" />
+          <Property Name="PswState" Type="Int32" />
+          <Property Name="OilBox" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="ServerID" Type="Int32" />
+          <Property Name="Del" Type="Int32" />
+          <Property Name="Icon" Type="Int32" />
+          <Property Name="InstallerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstallPosition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstallType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstallTime" Type="DateTime" Precision="3" />
+          <Property Name="Cpys" Type="Int32" />
+          <Property Name="Sccj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Aliases" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnableTime" Type="DateTime" Precision="3" />
+          <Property Name="VIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehBrandID" Type="Int32" />
+          <Property Name="VehSeriesID" Type="Int32" />
+          <Property Name="IPCode" Type="Int32" />
+          <Property Name="VehicleType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastModify" Type="DateTime" Precision="3" />
+          <Property Name="VehicleStatus" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="zyt_basegpsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AlarmSetting" EntityType="Self.AlarmSetting" />
+          <EntitySet Name="Vehicle" EntityType="Self.Vehicle" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="zyt_basegpsModelStoreContainer" CdmEntityContainer="zyt_basegpsEntities">
+          <EntitySetMapping Name="AlarmSetting">
+            <EntityTypeMapping TypeName="zyt_basegpsModel.AlarmSetting">
+              <MappingFragment StoreEntitySet="AlarmSetting">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+                <ScalarProperty Name="parameter1" ColumnName="parameter1" />
+                <ScalarProperty Name="parameter2" ColumnName="parameter2" />
+                <ScalarProperty Name="parameter3" ColumnName="parameter3" />
+                <ScalarProperty Name="parameter4" ColumnName="parameter4" />
+                <ScalarProperty Name="parameter5" ColumnName="parameter5" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="EditTime" ColumnName="EditTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+                <ScalarProperty Name="AlarmTypeID" ColumnName="AlarmTypeID" />
+                <ScalarProperty Name="InOutType" ColumnName="InOutType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicle">
+            <EntityTypeMapping TypeName="zyt_basegpsModel.Vehicle">
+              <MappingFragment StoreEntitySet="Vehicle">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MobileID" ColumnName="MobileID" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="VehicleTypeID" ColumnName="VehicleTypeID" />
+                <ScalarProperty Name="ColorID" ColumnName="ColorID" />
+                <ScalarProperty Name="Plate" ColumnName="Plate" />
+                <ScalarProperty Name="VehicleSIM" ColumnName="VehicleSIM" />
+                <ScalarProperty Name="VoiceNum" ColumnName="VoiceNum" />
+                <ScalarProperty Name="DataNum" ColumnName="DataNum" />
+                <ScalarProperty Name="GPRSNum" ColumnName="GPRSNum" />
+                <ScalarProperty Name="VehiclePassword" ColumnName="VehiclePassword" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Creater" ColumnName="Creater" />
+                <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
+                <ScalarProperty Name="LoginEnable" ColumnName="LoginEnable" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="OverdueTime" ColumnName="OverdueTime" />
+                <ScalarProperty Name="Months" ColumnName="Months" />
+                <ScalarProperty Name="PswState" ColumnName="PswState" />
+                <ScalarProperty Name="OilBox" ColumnName="OilBox" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ServerID" ColumnName="ServerID" />
+                <ScalarProperty Name="Del" ColumnName="Del" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="InstallerName" ColumnName="InstallerName" />
+                <ScalarProperty Name="InstallPosition" ColumnName="InstallPosition" />
+                <ScalarProperty Name="InstallType" ColumnName="InstallType" />
+                <ScalarProperty Name="InstallTime" ColumnName="InstallTime" />
+                <ScalarProperty Name="Cpys" ColumnName="Cpys" />
+                <ScalarProperty Name="Sccj" ColumnName="Sccj" />
+                <ScalarProperty Name="Aliases" ColumnName="Aliases" />
+                <ScalarProperty Name="IsEnableTime" ColumnName="IsEnableTime" />
+                <ScalarProperty Name="VIN" ColumnName="VIN" />
+                <ScalarProperty Name="VehBrandID" ColumnName="VehBrandID" />
+                <ScalarProperty Name="VehSeriesID" ColumnName="VehSeriesID" />
+                <ScalarProperty Name="IPCode" ColumnName="IPCode" />
+                <ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="VehicleStatus" ColumnName="VehicleStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

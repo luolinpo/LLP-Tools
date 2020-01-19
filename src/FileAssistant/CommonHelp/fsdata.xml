@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+ <classificationrule>
+   <!--记录书本的信息-->
+   <rules formattype="zip" formatname="压缩文件">
+   </rules>
+   <rules formattype="pdf" formatname="书籍">
+   </rules>
+         <rules formattype="jpd" formatname="1111">
+      </rules>
+   <!--<rules formattype="jpd" formatname="1111">
+   </rules>-->
+   <!--<rules>
+     <formattype>zip</formattype>
+     <formatname>压缩文件</formatname>
+   </rules>
+   <rules>
+     <formattype>pdf</formattype>
+     <formatname>书籍</formatname>
+   </rules>-->
+ </classificationrule>
